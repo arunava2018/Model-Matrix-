@@ -42,7 +42,7 @@ export function Judge({
           </div>
 
           <p className="mt-1 text-xs uppercase tracking-[0.25em] text-muted-foreground">
-            Powered by Gemini 2.5 Flash
+            Powered by Gemini 1.5 Flash
           </p>
         </div>
 
