@@ -6,7 +6,13 @@ import OpenAI from "openai";
 import { systemPrompt, getJudgePrompt } from '@/lib/prompts';
 import type { BattleResult, JudgeVerdict } from "@/lib/types";
 import { normalizeJudgeVerdict } from "@/lib/utils";
+import { Redis } from "@upstash/redis";
 dotenv.config();
+
+const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN 
+  ? Redis.fromEnv() 
+  : null;
+
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const openrouter = new OpenAI({
@@ -80,6 +86,33 @@ async function judgeResponses(
 
 export async function POST(req: NextRequest) {
   try {
+    if (redis) {
+      const ip = req.headers.get("x-forwarded-for") || "unknown";
+      const key = `ratelimit:${ip}`;
+      const now = Date.now();
+      const windowMs = 5 * 60 * 1000; // 5 minutes
+
+      const data: { count: number; windowStart: number } | null = await redis.get(key);
+
+      if (!data) {
+        await redis.set(key, { count: 1, windowStart: now });
+      } else {
+        const diff = now - data.windowStart;
+        if (diff < windowMs) {
+          if (data.count < 5) {
+            await redis.set(key, { count: data.count + 1, windowStart: data.windowStart });
+          } else {
+            return NextResponse.json(
+              { error: "Too many requests. Please wait 5 minutes before trying again." },
+              { status: 429 }
+            );
+          }
+        } else {
+          await redis.set(key, { count: 1, windowStart: now });
+        }
+      }
+    }
+
     const { question } = await req.json();
 
     if (!question || typeof question !== "string" || !question.trim()) {

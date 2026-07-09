@@ -26,16 +26,16 @@ export function QuestionInput({
   }
 
   return (
-    <div className="rounded-2xl border border-zinc-800/80 bg-gradient-to-b from-zinc-900 to-zinc-950 p-4 shadow-xl">
+    <div className="rounded-2xl border border-border bg-card text-card-foreground p-4 shadow-xl">
 
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h3 className="flex items-center gap-2 text-sm font-semibold text-zinc-200">
-            <Sparkles className="h-4 w-4 text-cyan-400" />
+          <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground">
+            <Sparkles className="h-4 w-4 text-foreground" />
             Prompt Arena
           </h3>
 
-          <p className="mt-1 text-xs text-zinc-500">
+          <p className="mt-1 text-xs text-muted-foreground">
             Submit a single prompt to evaluate responses across multiple AI
             models.
           </p>
@@ -48,23 +48,24 @@ export function QuestionInput({
         onKeyDown={handleKeyDown}
         placeholder="Ask a question, describe a task, or provide a prompt for the models to evaluate..."
         rows={5}
-        className="resize-none rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-500 focus-visible:border-cyan-500/50 focus-visible:ring-1 focus-visible:ring-cyan-500/20"
+        disabled={loading}
+        className="resize-none rounded-xl border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:border-indigo-500/50 focus-visible:ring-1 focus-visible:ring-indigo-500/20 transition-all"
       />
 
       <div className="mt-4 flex items-center justify-between">
 
         <div className="space-y-1">
-          <p className="text-xs font-medium text-zinc-400">
+          <p className="text-xs font-medium text-muted-foreground">
             Keyboard Shortcut
           </p>
 
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-muted-foreground">
             Press{" "}
-            <span className="rounded bg-zinc-800 px-1.5 py-0.5 font-mono text-zinc-300">
+            <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-foreground">
               Ctrl
             </span>{" "}
             +{" "}
-            <span className="rounded bg-zinc-800 px-1.5 py-0.5 font-mono text-zinc-300">
+            <span className="rounded bg-muted px-1.5 py-0.5 font-mono text-foreground">
               Enter
             </span>{" "}
             to submit instantly.
@@ -74,7 +75,7 @@ export function QuestionInput({
         <Button
           onClick={onSubmit}
           disabled={loading || !value.trim()}
-          className="h-11 gap-2 rounded-lg bg-cyan-500 px-5 font-medium text-zinc-950 transition-all hover:bg-cyan-400 disabled:bg-zinc-800 disabled:text-zinc-500"
+          className="h-11 gap-2 rounded-lg bg-indigo-600 px-5 font-medium text-white transition-all hover:bg-indigo-500 disabled:bg-muted disabled:text-muted-foreground"
         >
           {loading ? (
             <>

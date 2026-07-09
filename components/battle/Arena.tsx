@@ -6,8 +6,9 @@ import { Swords } from "lucide-react";
 import { QuestionInput } from "@/components/battle/Question-Input";
 import { ResponseCard } from "@/components/battle/Response-Card";
 import { Judge } from "@/components/battle/Judge";
+import { ThemeToggle } from "@/components/theme-toggle";
 import type { BattleResult, JudgeVerdict } from "@/lib/types";
-import axios, { Axios } from "axios";
+import axios from "axios";
 
 export function BattleArena() {
   const [question, setQuestion] = useState("");
@@ -34,8 +35,12 @@ export function BattleArena() {
       }
 
       setResult(data as BattleResult);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+    } catch (err: any) {
+      if (err.response?.data?.error) {
+        setError(err.response.data.error);
+      } else {
+        setError(err instanceof Error ? err.message : "Something went wrong.");
+      }
     } finally {
       setLoading(false);
     }
@@ -50,17 +55,20 @@ export function BattleArena() {
   return (
     <div className="mx-auto flex min-h-screen max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6">
       <header className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900">
-          <Swords className="h-5 w-5 text-cyan-400" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card shadow-sm">
+          <Swords className="h-5 w-5 text-foreground" />
         </div>
         <div>
-          <h1 className="text-lg font-semibold tracking-tight text-zinc-100">
+          <h1 className="text-xl font-bold tracking-tight text-foreground">
             Self-Consistency Answer Engine
           </h1>
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-muted-foreground">
             Generate multiple independent responses, compare them objectively,
             and identify the most reliable answer through AI evaluation.
           </p>
+        </div>
+        <div className="ml-auto">
+          <ThemeToggle />
         </div>
       </header>
 
@@ -72,7 +80,7 @@ export function BattleArena() {
       />
 
       {error && (
-        <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+        <div className="rounded-lg border border-foreground/30 bg-foreground/10 px-4 py-3 text-sm text-foreground">
           {error}
         </div>
       )}

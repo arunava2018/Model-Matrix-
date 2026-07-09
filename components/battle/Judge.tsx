@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 import type { JudgeVerdict } from "@/lib/types";
 
 const BAR_COLOR: Record<string, string> = {
-  Groq: "bg-gradient-to-r from-orange-500 to-amber-400",
-  OpenRouter: "bg-gradient-to-r from-violet-600 to-fuchsia-500",
+  Groq: "bg-foreground",
+  OpenRouter: "bg-foreground/70",
 };
 
 interface JudgePanelProps {
@@ -28,47 +28,47 @@ export function Judge({
   )?.score;
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-zinc-800/80 bg-gradient-to-b from-zinc-900 to-zinc-950 p-6 shadow-xl">
+    <div className="flex h-full flex-col rounded-2xl border border-border bg-card text-card-foreground p-6 shadow-xl">
 
       {/* Header */}
       <div className="mb-8 flex items-center justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <Trophy className="h-5 w-5 text-yellow-400" />
+            <Trophy className="h-5 w-5 text-foreground" />
 
-            <span className="text-sm font-semibold tracking-wide text-zinc-200">
+            <span className="text-sm font-semibold tracking-wide text-foreground">
               Evaluation Engine
             </span>
           </div>
 
-          <p className="mt-1 text-xs uppercase tracking-[0.25em] text-zinc-500">
+          <p className="mt-1 text-xs uppercase tracking-[0.25em] text-muted-foreground">
             Powered by Gemini 2.5 Flash
           </p>
         </div>
 
-        <Sparkles className="h-5 w-5 text-zinc-600" />
+        <Sparkles className="h-5 w-5 text-muted-foreground" />
       </div>
 
       {loading ? (
         <div className="space-y-6">
 
           <div>
-            <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">
+            <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
               Running Independent Evaluation
             </p>
 
-            <p className="mt-2 text-sm text-zinc-400">
+            <p className="mt-2 text-sm text-muted-foreground">
               Comparing response quality, factual accuracy, reasoning,
               completeness, and clarity.
             </p>
           </div>
 
-          <Skeleton className="h-10 w-48 bg-zinc-800" />
-          <Skeleton className="h-24 w-full rounded-xl bg-zinc-800" />
+          <Skeleton className="h-10 w-48" />
+          <Skeleton className="h-24 w-full rounded-xl" />
 
           <div className="space-y-4">
-            <Skeleton className="h-4 w-full bg-zinc-800" />
-            <Skeleton className="h-4 w-full bg-zinc-800" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
           </div>
         </div>
       ) : verdict ? (
@@ -76,33 +76,29 @@ export function Judge({
 
           {/* Winner */}
 
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
+          <div className="rounded-xl border border-border bg-muted/50 p-5">
 
-            <div className="text-xs uppercase tracking-[0.25em] text-zinc-500">
+            <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
               Best Overall Response
             </div>
 
             <div className="mt-4 flex items-end justify-between">
-
               <div>
-
-                <h2 className="text-3xl font-bold tracking-tight text-white">
+                <h2 className="text-3xl font-bold tracking-tight text-foreground">
                   {verdict.winner}
                 </h2>
-
-                <p className="mt-1 text-sm text-zinc-500">
+                <p className="mt-1 text-sm text-muted-foreground">
                   Selected as the strongest response after comparative analysis.
                 </p>
-
               </div>
 
               {winnerScore !== undefined && (
-                <div className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2">
-                  <span className="text-lg font-bold text-emerald-400">
+                <div className="rounded-full border border-foreground/30 bg-muted px-4 py-2">
+                  <span className="text-lg font-bold text-foreground">
                     {winnerScore.toFixed(1)}
                   </span>
 
-                  <span className="ml-1 text-xs uppercase tracking-widest text-emerald-300">
+                  <span className="ml-1 text-xs uppercase tracking-widest text-foreground">
                     /10
                   </span>
                 </div>
@@ -113,13 +109,13 @@ export function Judge({
 
           {/* Summary */}
 
-          <div className="mt-6 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5">
+          <div className="mt-6 rounded-xl border border-border bg-muted/30 p-5">
 
-            <div className="mb-3 text-xs uppercase tracking-[0.25em] text-zinc-500">
+            <div className="mb-3 text-xs uppercase tracking-[0.25em] text-muted-foreground">
               Evaluation Summary
             </div>
 
-            <p className="text-sm leading-7 text-zinc-300">
+            <p className="text-sm leading-7 text-foreground/80">
               {verdict.reason}
             </p>
 
@@ -131,14 +127,9 @@ export function Judge({
 
             <div className="mb-5 flex items-center justify-between">
 
-              <h3 className="text-xs uppercase tracking-[0.25em] text-zinc-500">
+              <h3 className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
                 Performance Breakdown
               </h3>
-
-              <span className="text-xs text-zinc-600">
-                Comparative scoring
-              </span>
-
             </div>
 
             <div className="space-y-5">
@@ -151,23 +142,23 @@ export function Judge({
 
                     <div>
 
-                      <div className="font-medium text-zinc-200">
+                      <div className="font-medium text-foreground">
                         {entry.model}
                       </div>
 
-                      <div className="text-xs text-zinc-500">
+                      <div className="text-xs text-muted-foreground">
                         Overall response quality
                       </div>
 
                     </div>
 
-                    <div className="rounded-md border border-zinc-700 bg-zinc-900 px-3 py-1">
+                    <div className="rounded-md border border-border bg-background px-3 py-1">
 
-                      <span className="font-mono text-sm font-semibold text-white">
+                      <span className="font-mono text-sm font-semibold text-foreground">
                         {entry.score.toFixed(1)}
                       </span>
 
-                      <span className="ml-1 text-xs text-zinc-500">
+                      <span className="ml-1 text-xs text-muted-foreground">
                         /10
                       </span>
 
@@ -175,13 +166,13 @@ export function Judge({
 
                   </div>
 
-                  <div className="h-2 overflow-hidden rounded-full bg-zinc-800">
+                  <div className="h-2 overflow-hidden rounded-full bg-muted">
 
                     <div
                       className={cn(
                         "h-full rounded-full transition-all duration-700 ease-out",
                         BAR_COLOR[entry.model] ??
-                          "bg-gradient-to-r from-cyan-500 to-sky-400"
+                          "bg-foreground"
                       )}
                       style={{
                         width: `${entry.score * 10}%`,
@@ -193,7 +184,7 @@ export function Judge({
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-zinc-500">
+                <p className="text-sm text-muted-foreground">
                   No score breakdown was returned for this evaluation.
                 </p>
               )}
@@ -206,13 +197,13 @@ export function Judge({
       ) : (
         <div className="flex flex-1 flex-col items-center justify-center text-center">
 
-          <Trophy className="mb-4 h-10 w-10 text-zinc-700" />
+          <Trophy className="mb-4 h-10 w-10 text-muted-foreground" />
 
-          <h3 className="text-lg font-semibold text-zinc-300">
+          <h3 className="text-lg font-semibold text-foreground/80">
             Awaiting Evaluation
           </h3>
 
-          <p className="mt-3 max-w-sm text-sm leading-6 text-zinc-500">
+          <p className="mt-3 max-w-sm text-sm leading-6 text-muted-foreground">
             {hasQuestion
               ? "Both AI models are generating their responses. The evaluation will begin automatically once every response has been received."
               : "Submit a prompt to compare multiple AI models. An independent evaluation, winner selection, and detailed performance breakdown will appear here."}
