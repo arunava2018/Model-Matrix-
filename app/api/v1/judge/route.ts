@@ -5,6 +5,7 @@ import { GoogleGenAI } from "@google/genai";
 import OpenAI from "openai";
 import { systemPrompt, getJudgePrompt } from '@/lib/prompts';
 import type { BattleResult, JudgeVerdict } from "@/lib/types";
+import { normalizeJudgeVerdict } from "@/lib/utils";
 dotenv.config();
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
@@ -69,7 +70,12 @@ async function judgeResponses(
     },
   });
 
-  return JSON.parse(response.text ?? "{}");
+  try {
+    const parsed = JSON.parse(response.text ?? "{}")
+    return normalizeJudgeVerdict(parsed)
+  } catch {
+    return normalizeJudgeVerdict({})
+  }
 }
 
 export async function POST(req: NextRequest) {

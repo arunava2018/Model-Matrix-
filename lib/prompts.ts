@@ -36,27 +36,11 @@ Evaluate them using the following criteria:
 Return ONLY valid JSON format.
 Example JSON Format :
 {
-  "winner": ${model1} | ${model2} | "Tie",
-  "scores": {
-    ${model1}: {
-      "technical_correctness": 0,
-      "completeness": 0,
-      "clarity": 0,
-      "easy_to_understand": 0,
-      "real_world_analogy": 0,
-      "practical_examples": 0,
-      "total": 0
-    },
-    ${model2}: {
-      "technical_correctness": 0,
-      "completeness": 0,
-      "clarity": 0,
-      "easy_to_understand": 0,
-      "real_world_analogy": 0,
-      "practical_examples": 0,
-      "total": 0
-    }
-  },
+  "winner": "${model1}" | "${model2}" | "Tie",
+  "scores": [
+    { "model": "${model1}", "score": 8.5 },
+    { "model": "${model2}", "score": 7.8 }
+  ],
   "reason": "Explain why the winning answer (${model1} | ${model2}) is better."
 }
 `;
