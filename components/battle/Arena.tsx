@@ -60,7 +60,7 @@ export function BattleArena() {
         </div>
         <div>
           <h1 className="text-xl font-bold tracking-tight text-foreground">
-            Self-Consistency Answer Engine
+            Model Matrix
           </h1>
           <p className="text-sm text-muted-foreground">
             Generate multiple independent responses, compare them objectively,

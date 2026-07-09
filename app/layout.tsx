@@ -12,8 +12,8 @@ const fontSans = Plus_Jakarta_Sans({
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
-  title: "Self-Consistency Answer Engine",
-  description: "Evaluate your prompts with multiple LLMs.",
+  title: "Model Matrix | Compare LLMs",
+  description: "Test, compare, and evaluate your prompts across multiple Large Language Models side-by-side.",
 };
 
 export default function RootLayout({
